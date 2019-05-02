@@ -1,6 +1,5 @@
 
 const User = require('../db/models/user');
-const passport = require("passport");     //引入passport中间件
 
 // TODO
 // userName and password Validation()

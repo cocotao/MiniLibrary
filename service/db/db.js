@@ -23,24 +23,6 @@ mongoose.connection.on('disconnected', function() {
   console.log('Mongoose connection disconnected');
 });
 
-// var dbConnect = function (uri) {
-//   return new Promise(function(resolve, reject) {
-//     mongoose.connection
-//       .on('error', function(error) {
-//         reject(error, new Date());
-//       })
-//       .on('close', function(error) {
-//         console.log('Database connection closed.');
-//       })
-//       .once('open', function(error) {
-//         resolve(mongoose.connections[0]);
-//       });
-
-//     mongoose.connect(uri);
-//   });
-// };
-
-
 module.exports = mongoose;
 
 

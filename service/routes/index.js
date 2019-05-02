@@ -1,6 +1,6 @@
 const router = require('koa-router')()   // koa-generator has import koa-router
 
-router.get('/', async (ctx, next) => {
+router.get('/aaa', async (ctx, next) => {
   await ctx.render('index', {
     title: 'Hello Koa 2!'
   })

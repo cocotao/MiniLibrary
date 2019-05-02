@@ -1,1 +1,6 @@
+node_modules
 /service/node_modules/
+/service/package-lock.json
+/ui/node_modules/
+/ui/package-lock.json
+/.project

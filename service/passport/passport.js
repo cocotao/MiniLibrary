@@ -1,17 +1,22 @@
 const passport = require('koa-passport')
 
+// not need to serializeUser
+/*
 passport.serializeUser(function (user, done) {
-    // 序列化的结果只是一个id
-    done(null, user.name)
+   
+    done(null, user.name)  // use user's id to serialize
 })
+*/
 
-passport.deserializeUser(async function (str, done) {
-    // 根据id恢复用户
+// not need to deserializeUser
+/*
+passport.deserializeUser(async function (id, done) {
     done(null, {
-        username: parseInt(str),
-        name: 'user' + str
+        username: parseInt(id), // use user's id to serialize
+        name: 'user' + id
     })
 })
+*/
 
 
 module.exports = passport;

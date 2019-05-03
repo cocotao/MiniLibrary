@@ -6,59 +6,45 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
-// enale session by koa-session
-// const session = require('koa-session')
-// app.keys = ['some secret']
-// const conf = {
-//   encode: json => JSON.stringify(json),
-//   decode: str => JSON.parse(str)
-// }
-// app.use(session(conf, app))
+/**
+ * enale session by koa-session
+ */
+/*
+const session = require('koa-session')
+app.keys = ['some secret']
+const conf = {
+  encode: json => JSON.stringify(json),
+  decode: str => JSON.parse(str)
+}
+app.use(session(conf, app))
+*/
 
-// enale passport for user login authenticated
 
-
-// 调用use()来为passport新增一个可用的策略
+/**
+ * enale passport for user login authenticated
+ */
 const passport = require('./passport/passport')
 const jwtStrategy = require('./passport/strategy/jwt')
 const navieStrategy = require('./passport/strategy/naive')
-app.use(passport.initialize())
+const localStrategy = require('./passport/strategy/local')
+const passportJwtStrategy = require('./passport/strategy/passportjwt')
+
+
+app.use(passport.initialize()) 
 // app.use(passport.session())
-passport.use(navieStrategy)
-passport.use(jwtStrategy)
-// 添加一个koa的中间件，使用naive策略来鉴权。这里暂不使用session
-// app.use(passport.authenticate('naive', {
-//   session: false
-// }))
+passport.use(navieStrategy) // call use() to add a verify strategy in passport
+// passport.use(jwtStrategy)
+passport.use(localStrategy)
+passport.use(passportJwtStrategy)
 
-// 业务代码
-const Router = require('koa-router')
-const router = new Router()
-router.get('/', async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    // ctx.state.user就是鉴权后得到的用户身份
-    ctx.body = 'hello ' + JSON.stringify(ctx.state.user)
-  } else {
-    ctx.throw(401)
-  }
-})
-// router.post('/login', async (ctx) => {
-//   passport.authenticate('naive', {
-//     successRedirect: '/'
-//   })
-// })
-app.use(router.routes())
-  
-
-
-// middlewares
+// introduced middlewares
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 })) // koa-bodyparser has been introduced by koa-generator, bodyparser must be registered before koa-router
 app.use(json())
 app.use(logger())
 
-const index = require('./routes/index')
+// const index = require('./routes/index')
 const users = require('./routes/users')
 const books = require('./routes/books')
 
@@ -93,7 +79,7 @@ app.use(async (ctx, next) => {
 });
 
 // routes // orignal router method
-app.use(index.routes(), index.allowedMethods())
+// app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(books.routes(), books.allowedMethods())
 

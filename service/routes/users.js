@@ -2,122 +2,76 @@ const router = require('koa-router')()
 const User = require('../controllers/user.controller')
 const passport = require('../passport/passport')
 const secret = 'jwt demo'
-
-
 var jwt = require('jsonwebtoken');
+
 router.prefix('/user')
 
-// POST /api/user – create new user with provided name and password, should return JWT token
-router.post('/',  async function (ctx, next) {
-  if (ctx.isAuthenticated()) {
-    const userCreateResult = await User.createNewUser(ctx.request.body.username, ctx.request.body.password);
-    if (userCreateResult) ctx.body = userCreateResult;
-  } else {
-    ctx.throw(401)
-  }
+/**
+ * POST /user – create new user with provided name and password, should return JWT token
+ */
+router.post('/', passport.authenticate('jwt', {
+  session: false
+}), async function (ctx, next) {
+  const userCreateResult = await User.createNewUser(ctx.request.body.username, ctx.request.body.password);
+  if (userCreateResult) ctx.body = userCreateResult;
 })
 
-router.post('/aaa', async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    // ctx.state.user就是鉴权后得到的用户身份
-    ctx.body = 'hello ' + JSON.stringify(ctx.state.user)
-  } else {
-    ctx.throw(401)
-  }
-})
-
-router.post('/userValidateSuccess',
-  passport.authenticate('jwt', {
-    successRedirect: '/user/bbb',
-    failureFlash: 'Invalid username or password.'
-  })
-)
-
-router.post('/bbb', async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    // ctx.state.user就是鉴权后得到的用户身份
-  //  ctx.body = 'hello ' + JSON.stringify(ctx.state.user)
-    ctx.body = {
-      message: '获取token成功',
-      code: 1,
-      token: ctx.header.authorization
-    }
-  } else {
-    ctx.throw(401)
-  }
-})
-
-router.post('/ccc', passport.authenticate('jwt', {}) , async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    // ctx.state.user就是鉴权后得到的用户身份
-  //  ctx.body = 'hello ' + JSON.stringify(ctx.state.user)
-    ctx.body = {
-      message: '获取token成功',
-      code: 1,
-      token: ctx.header.authorization
-    }
-  } else {
-    ctx.throw(401)
-  }
-})
-
-// app.use(router.routes())
+/**
+ * POST /user/login – create new user with provided name and password, should return JWT token
+ */
+// use naive strategy to do passport authentication for '/user/login', not using session temporarily
 router.post('/login', passport.authenticate('naive', {
-  // successRedirect: '/user/bbb',
-  // failureFlash: 'Invalid username or password.'
+  session: false 
 }), async (ctx) => {
   const user = ctx.request.body
   if (user && user.username) {
-    let userToken = {
-      name: user.username
-    }
-    const token = jwt.sign(userToken, secret, {
-      expiresIn: '1h' //token签名 有效期为1小时
-    })
-    ctx.header.authorization = token;
+    let token = generateJwtToken(user)
     ctx.body = {
-      message: '获取token成功',
+      message: 'generate token success',
       code: 1,
       token
     }
-    // ctx.response.redirect('/user/userValidateSuccess')
   } else {
     ctx.body = {
-      message: '参数错误',
+      message: 'verify failed, please input correct user info',
       code: -1
     }
   }
 })
 
-// router.post('/login', 
-//   async (ctx) => {
-//     const user = ctx.request.body
-//     if (user && user.username) {
-//       let userToken = {
-//         name: user.username
-//       }
-//       const token = jwt.sign(userToken, secret, {
-//         expiresIn: '1h' //token签名 有效期为1小时
-//       })
-//       ctx.header.authorization = token;
-//       ctx.body = {
-//         message: '获取token成功',
-//         code: 1,
-//         token
-//       }
-//      ctx.response.redirect('/user/userValidateSuccess')
-//     } else {
-//       ctx.body = {
-//         message: '参数错误',
-//         code: -1
-//       }
-//     }
-//   }
-// )
+// TODO: passport local strategy test
+router.post('/aaa', passport.authenticate('local', {
+  session: false 
+}), async (ctx) => {
+  ctx.body = {
+    message: 'local startegy works fine'
+  }
+})
+
+// TODO: passport passportJwt strategy test
+router.post('/bbb', passport.authenticate('jwt', { session: false }), async (ctx) => {
+  ctx.body = {
+    message: 'passportJwt startegy works fine'
+  }
+})
 
 
-// GET /api/user/logout – clear current JWT token and logout user (Optional)
-router.post('/logout', function (ctx, next) {
+generateJwtToken = function (user) {
+    let userToken = {
+      name: user.username
+    }
+    // TODO: secret could be enhanced?
+    const token = jwt.sign(userToken, secret, {
+      expiresIn: '1h'
+    })
+    return token;
+}
+
+/**
+ * GET /api/user/logout – clear current JWT token and logout user (Optional)
+ */
+router.post('/logout', passport.authenticate('jwt', {session: false}), function (ctx, next) {
+  // TODO: add jwt token to black list
   ctx.logout()
   ctx.body = {
     auth: ctx.isAuthenticated(),
@@ -125,8 +79,15 @@ router.post('/logout', function (ctx, next) {
   }
 })
 
-// GET /api/user/:id/reservations (returns reserved books by the user)
-router.get('/:id/reservations', function(ctx, next) {
+/**
+ * GET /api/user/:id/reservations (returns reserved books by the user)
+ */
+// use jwt strategy to do passport authentication for '/user/login', not using session temporarily
+router.get('/:id/reservations', passport.authenticate('jwt', {session: false}), function(ctx, next) {
+  // use passport.authenticate() will return 401 error directly, so the code wouldn't be used.
+  // if (ctx.isAuthenticated()) {} else {  
+  //   ctx.throw(401)
+  // }
   var id = ctx.params.id;
   ctx.body = 'this is /:id/reservations resposne : ' + id 
 })

@@ -1,19 +1,39 @@
 const router = require('koa-router')()
 const User = require('../controllers/user.controller')
+const Reservation = require('../controllers/reservation.controller')
 const passport = require('../passport/passport')
 const secret = 'jwt demo'
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 router.prefix('/user')
+
+// TODO: delete in manual test
+router.get('/', passport.authenticate('jwt', {session: false}), async function (ctx, next) {
+  let users = await User.getAllUsers()
+  if (users) {
+    ctx.body = users;
+  } else {
+    ctx.status = 500;
+  }
+})
 
 /**
  * POST /user – create new user with provided name and password, should return JWT token
  */
-router.post('/', passport.authenticate('jwt', {
-  session: false
-}), async function (ctx, next) {
-  const userCreateResult = await User.createNewUser(ctx.request.body.username, ctx.request.body.password);
-  if (userCreateResult) ctx.body = userCreateResult;
+router.post('/', async function (ctx, next) {
+  let userSearchResult = await User.searchUserByName(ctx.request.body.name);
+  if (!userSearchResult) {
+    const userCreateResult = await User.createNewUser(ctx.request.body.name, ctx.request.body.password);
+    if (userCreateResult) {
+      ctx.body = userCreateResult;
+    } else {
+      ctx.status = 500
+      ctx.body = "internal error"
+    }
+  } else {
+    ctx.status = 409
+    ctx.body = "user exist!"
+  }
 })
 
 /**
@@ -21,24 +41,65 @@ router.post('/', passport.authenticate('jwt', {
  */
 // use naive strategy to do passport authentication for '/user/login', not using session temporarily
 router.post('/login', passport.authenticate('naive', {
-  session: false 
-}), async (ctx) => {
-  const user = ctx.request.body
-  if (user && user.username) {
-    let token = generateJwtToken(user)
+  session: false
+}), async function (ctx, next) {
+  // TODO: password need to be secret
+  let user = ctx.state.user
+  let token = _generateJwtToken(user)
     ctx.body = {
-      message: 'generate token success',
-      code: 1,
+      user,
       token
-    }
-  } else {
-    ctx.body = {
-      message: 'verify failed, please input correct user info',
-      code: -1
-    }
   }
 })
 
+/**
+ * GET /api/user/logout – clear current JWT token and logout user (Optional)
+ */
+router.get('/logout', passport.authenticate('jwt', {session: false}), function (ctx, next) {
+  // TODO: add jwt token to black list
+  ctx.logout()
+  ctx.body = {
+    auth: ctx.isAuthenticated(),
+    user: ctx.state.user
+  }
+})
+
+/**
+ * GET /api/user/:id/reservations (returns reserved books by the user)
+ */
+// passport.authenticate('jwt', {session: false}),
+// Route path: /users/:id/reservations
+// Request URL: http://localhost:3000/users/34/reservations
+router.get('/:id/reservations', passport.authenticate('jwt', {session: false}), async function(ctx, next) {
+  let id = ctx.params.id;
+  let searchResult = await Reservation.searchOneReservationByUserId(id);
+  if (searchResult) {
+    ctx.body = { searchResult }
+  } else {
+    ctx.status = 404;
+    ctx.body = "reservation not found"  
+  }
+})
+
+/**
+ * private functions
+ */
+_generateJwtToken = function (user) {
+  let userToken = {
+    name: user.name,
+    password: user.password
+  }
+  // TODO: secret could be enhanced?
+  const token = jwt.sign(userToken, secret, {
+    expiresIn: '1h'
+  })
+  return token;
+}
+
+module.exports = router
+
+
+/*
 // TODO: passport local strategy test
 router.post('/aaa', passport.authenticate('local', {
   session: false 
@@ -54,42 +115,4 @@ router.post('/bbb', passport.authenticate('jwt', { session: false }), async (ctx
     message: 'passportJwt startegy works fine'
   }
 })
-
-
-generateJwtToken = function (user) {
-    let userToken = {
-      name: user.username
-    }
-    // TODO: secret could be enhanced?
-    const token = jwt.sign(userToken, secret, {
-      expiresIn: '1h'
-    })
-    return token;
-}
-
-/**
- * GET /api/user/logout – clear current JWT token and logout user (Optional)
- */
-router.post('/logout', passport.authenticate('jwt', {session: false}), function (ctx, next) {
-  // TODO: add jwt token to black list
-  ctx.logout()
-  ctx.body = {
-    auth: ctx.isAuthenticated(),
-    user: ctx.state.user
-  }
-})
-
-/**
- * GET /api/user/:id/reservations (returns reserved books by the user)
- */
-// use jwt strategy to do passport authentication for '/user/login', not using session temporarily
-router.get('/:id/reservations', passport.authenticate('jwt', {session: false}), function(ctx, next) {
-  // use passport.authenticate() will return 401 error directly, so the code wouldn't be used.
-  // if (ctx.isAuthenticated()) {} else {  
-  //   ctx.throw(401)
-  // }
-  var id = ctx.params.id;
-  ctx.body = 'this is /:id/reservations resposne : ' + id 
-})
-
-module.exports = router
+*/

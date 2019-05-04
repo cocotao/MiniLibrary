@@ -10,7 +10,7 @@ opts.secretOrKey = 'jwt demo';
 const passportJwtStrategy = new JwtStrategy(opts, function(jwt_payload, done) {
   const test = "test";
   const id = jwt_payload.name;
-  done(null, id)
+  done(null, "id")
 })
 
 module.exports = passportJwtStrategy;

@@ -20,7 +20,7 @@ const naiveStrategy = {
       if (userSearchResult) {
         this.success(userSearchResult)
       } else {
-        this.fail(409)
+        this.fail(400, "username or password error")
       }
     }
   }

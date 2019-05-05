@@ -12,7 +12,7 @@
         },
 
         {
-            "name": "Run MiniLabrary node service",
+            "name": "Service start",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/service/bin/www",
@@ -30,7 +30,7 @@
             "sourceMaps": false,
         },
         {
-            "name": "Chrome",
+            "name": "UI debug in VS",
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:3000",

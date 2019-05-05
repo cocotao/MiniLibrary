@@ -69,6 +69,15 @@ class SignIn extends Component {
               password: this.state.password
             })
         console.log(response);
+        debugger;
+        var path = {
+          pathname:'/pricing/',
+          state: {
+            userId : response.data.user._id,
+            jwtToken : response.data.token
+          }
+        }
+        this.props.history.push(path);
       } catch (error) {
         console.error(error);
       }
@@ -120,5 +129,6 @@ class SignIn extends Component {
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 
 export default withStyles(styles)(SignIn);

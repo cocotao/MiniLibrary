@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from "react-router-dom";
+import SignIn from './components/SignIn';
+import Pricing from './components/Pricing'
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { orange } from '@material-ui/core/colors'
@@ -17,9 +27,14 @@ const theme = createMuiTheme({
   }
 })
 
-
-ReactDOM.render(<MuiThemeProvider theme={theme}>
-    <App />
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <Router>
+        <Route path="/" exact component={SignIn} 
+           render={props => <SignIn {...props} />}
+        />
+        <Route path="/pricing/" component={Pricing} />
+    </Router>
   </MuiThemeProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

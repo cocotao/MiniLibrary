@@ -41,7 +41,7 @@ module.exports.searchOneReservationByBookId = function(book_id) {
 };
 
 module.exports.searchOneReservationByUserId = function(user_id) {
-  return Reservation.find({'user_id':user_id }, 'book_id user_id start_date end_date');
+  return Reservation.find({'user_id':user_id }, 'book_id user_id start_date end_date').populate('book_id').exec();
 };
 
 module.exports.DeleteOneReservation = function(user_id, book_id) {

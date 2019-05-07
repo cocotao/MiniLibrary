@@ -16,12 +16,8 @@ module.exports.createNewBook = function (title, description, count) {
 };
 
 
-module.exports.updateBookById = function(id, title, description, count) {
-  const updateStr = {
-    title: title,
-    description: description,
-    count: count
-  };
+module.exports.updateBookById = function(id, bookItem) {
+  const updateStr = bookItem;
   return Books.findByIdAndUpdate({ '_id': id }, updateStr);
 };
 

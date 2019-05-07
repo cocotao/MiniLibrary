@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const Reservation = require('../controllers/reservation.controller')
+const Books = require('../controllers/books.controller')
 const passport = require('../passport/passport')
 
 router.prefix('/reservation')
@@ -29,6 +30,31 @@ router.post('/', passport.authenticate('jwt', {session: false}), async function 
   } else {
     ctx.status = 409;
     ctx.body = "reserversion exist, can't reserversion same again!"
+  }
+})
+
+// delete one reservation
+router.delete('/', passport.authenticate('jwt', {session: false}), async function (ctx, next) {
+  let reservationDeleteResult = await Reservation.DeleteOneReservation(ctx.request.body.user_id, ctx.request.body.book_id)
+  if (reservationDeleteResult) {
+    let bookItem = await Books.searchBookById(ctx.request.body.book_id)
+    if (bookItem) {
+      let bookUpdateBody = {
+        title: bookItem.title,
+        description: bookItem.description,
+        count: bookItem.count + 1
+      }
+      let bookItemUpdateResult = await Books.updateBookById(bookItem.id, bookUpdateBody);
+      if (bookItemUpdateResult) {
+        ctx.status = 204
+      } else {
+        ctx.status = 500
+      }
+    } else {
+      ctx.status = 500
+    }
+  }else {
+    ctx.status = 500
   }
 })
 

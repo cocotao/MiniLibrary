@@ -1,0 +1,474 @@
+{
+	"info": {
+		"_postman_id": "4b0173e6-a372-4687-8aba-41f6dac57140",
+		"name": "KOA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW41IiwiaWF0IjoxNTU2ODc2Mzg0LCJleHAiOjE1NTY4Nzk5ODR9.abq-GBrfw-EDbk3c40k5sRg9_WRo_uUyNB_5I-twMwI",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user2\",\n\t\"password\" : \"pw2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "user create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW41IiwiaWF0IjoxNTU2ODc2Mzg0LCJleHAiOjE1NTY4Nzk5ODR9.abq-GBrfw-EDbk3c40k5sRg9_WRo_uUyNB_5I-twMwI",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user102\",\n\t\"password\" : \"pw102\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "user login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e90812a-670a-4fea-b60f-a1cf46dd8042",
+						"exec": [
+							"tests[\"response code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"console.log(jsonData);",
+							"postman.setGlobalVariable(\"jwtToken\", \"Bearer \" + jsonData[\"token\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW41IiwiaWF0IjoxNTU2ODc2Mzg0LCJleHAiOjE1NTY4Nzk5ODR9.abq-GBrfw-EDbk3c40k5sRg9_WRo_uUyNB_5I-twMwI",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user101\",\n\t\"password\" : \"pw101\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "user logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user2\",\n\t\"password\" : \"pw2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/user/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"logout"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "user reservation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user2\",\n\t\"password\" : \"pw2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/user/5cccce6c2345f83cefffc730/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"5cccce6c2345f83cefffc730",
+						"reservations"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "book create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\" : \"book10\",\n\t\"description\" : \"book10 des\",\n\t\"count\" : 9\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/books",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"books"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "books all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\" : \"book4\",\n\t\"description\" : \"book4 des\",\n\t\"count\" : 10\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/books",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"books"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "book reservation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"user2\",\n\t\"password\" : \"pw2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/books/5cccdae34f5d5c4139445d43/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"books",
+						"5cccdae34f5d5c4139445d43",
+						"reservations"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "book update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"book 999\",\n    \"description\": \"book 999 description\",\n    \"count\": 999\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/books/5cccdae34f5d5c4139445d43/",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"books",
+						"5cccdae34f5d5c4139445d43",
+						""
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "reservation new",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\" : \"5ccccf05029eb13d24b57579\",\n\t\"book_id\" : \"5cccdae34f5d5c4139445d43\",\n\t\"start_date\" : \"test\",\n\t\"end_date\" : \"test\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/reservation",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"reservation"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "reservation delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"user_id\": \"5ccc572a8b016a37de0f99d3\",\n        \"book_id\": \"5cd034c9a2b7fa29afce26ee\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/reservation",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"reservation"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		},
+		{
+			"name": "reservations all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\" : \"5ccccf05029eb13d24b57579\",\n\t\"book_id\" : \"5cccd9b7526f794105a48b43\",\n\t\"start_date\" : \"test\",\n\t\"end_date\" : \"test\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/reservation",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"reservation"
+					]
+				},
+				"description": "create new user"
+			},
+			"response": []
+		}
+	]
+}

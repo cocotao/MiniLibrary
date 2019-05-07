@@ -214,6 +214,10 @@ class BookList extends Component {
         that.setState({borrowResultMessage: bookData.title + " borrowed failed!"})
         that.setState({borrowResultClass: that.props.classes.snackbarRed})
       });
+    } else {
+      that.setState({ openBorrowDialog: false })
+      that.setState({borrowResultMessage: bookData.title + " borrowed failed! Borrow time is not correct!"})
+      that.setState({borrowResultClass: that.props.classes.snackbarRed})
     }
   }
 

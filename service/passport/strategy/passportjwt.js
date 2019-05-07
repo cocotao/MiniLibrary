@@ -4,13 +4,10 @@ const JwtStrategy = require('passport-jwt').Strategy,
 const opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'jwt demo';
-// opts.issuer = 'accounts.examplesoft.com';
-// opts.audience = 'yoursite.net';
 
 const passportJwtStrategy = new JwtStrategy(opts, function(jwt_payload, done) {
-  const test = "test";
-  const id = jwt_payload.name;
-  done(null, "id")
+  const name = jwt_payload.name;
+  done(null, name)
 })
 
 module.exports = passportJwtStrategy;

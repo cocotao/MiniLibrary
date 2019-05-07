@@ -6,24 +6,22 @@ import * as serviceWorker from './serviceWorker';
 
 import {
   BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
+  Route
 } from "react-router-dom";
-import SignIn from './components/SignIn';
-import Pricing from './components/Pricing'
+import SignIn from './components/SignIn'
+import BookList from './components/BookList'
+import BorrowedList from './components/BorrowedList'
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-import { orange } from '@material-ui/core/colors'
+// import { orange } from '@material-ui/core/colors'
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: orange[200], // same as '#FFCC80',
-      main: '#FB8C00', // same as orange[600]
-      dark: '#EF6C00',
-      contrastText: 'rgb(0,0,0)'
-    }
+    // primary: {
+    //   light: orange[200], // same as '#FFCC80',
+    //   main: '#FB8C00', // same as orange[600]
+    //   dark: '#EF6C00',
+    //   contrastText: 'rgb(0,0,0)'
+    // }
   }
 })
 
@@ -33,7 +31,8 @@ ReactDOM.render(
         <Route path="/" exact component={SignIn} 
            render={props => <SignIn {...props} />}
         />
-        <Route path="/pricing/" component={Pricing} />
+        <Route path="/booklist/" component={BookList} />
+        <Route path="/borrowlist/" component={BorrowedList} />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));
 

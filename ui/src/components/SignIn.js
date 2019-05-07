@@ -4,14 +4,18 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import axios from 'axios';
 
@@ -47,12 +51,28 @@ const styles = theme => ({
   },
 });
 
+const SIGN_WAY = {
+  signIn: 1,
+  signUp: 2
+}
 
 class SignIn extends Component {
   state = {
     name: '',
-    password: ''
+    password: '',
+    errorDialogOpen: false,
+    errorMessage: '',
+    signWay: SIGN_WAY.signIn,
+    uiText: {
+      signWayText: 'Sign in',
+      signButtonText: 'Sing In',
+      signWaySwitchText: 'Switch to Sign Up'
+    }
   }
+
+  handleClose = () => {
+    this.setState({ errorDialogOpen: false });
+  };
 
   // controlled component in form, so need to update data by state
   handleChange = ({ target: { name, value } }) =>
@@ -60,18 +80,37 @@ class SignIn extends Component {
       [name]: value
     })
 
-  handleUserLogin = async (e) => {
+  handleUserSign = async (e) => {
     e.preventDefault()  // button default submit behavior must be prevent and do self logic
-    if (this.state.name && this.state.password) {
+    if (this.state.name && this.state.password && this.state.signWay === SIGN_WAY.signIn) {
       try {
-        const response = await axios.post('/user/login', {
+        let response = await axios.post('/user/login', {
+          name: this.state.name,
+          password: this.state.password
+        })
+        console.log(response);
+        let path = {
+          pathname: '/booklist/',
+          state: {
+            userId: response.data.user._id,
+            jwtToken: response.data.token
+          }
+        }
+        this.props.history.push(path);
+      } catch (error) {
+        this.setState({ errorMessage: error.response.data });
+        this.setState({ errorDialogOpen: true });
+        console.error(error);
+      }
+    } else if (this.state.name && this.state.password && this.state.signWay === SIGN_WAY.signUp) {
+      try {
+        let response = await axios.post('/user/', {
               name: this.state.name,
               password: this.state.password
             })
         console.log(response);
-        debugger;
-        var path = {
-          pathname:'/pricing/',
+        let path = {
+          pathname:'/booklist/',
           state: {
             userId : response.data.user._id,
             jwtToken : response.data.token
@@ -79,8 +118,36 @@ class SignIn extends Component {
         }
         this.props.history.push(path);
       } catch (error) {
+        this.setState({ errorMessage: error.response.data });
+        this.setState({ errorDialogOpen: true });
         console.error(error);
       }
+    } else {
+      this.setState({ errorDialogOpen: true });
+    }
+  }
+
+handelSwitchSignWay = (e) => {
+    if (this.state.signWay === SIGN_WAY.signIn) {
+      this.setState({
+        signWay: SIGN_WAY.signUp,
+        uiText: {
+          signWayText: 'Sign up',
+          signButtonText: 'Sing Up',
+          signWaySwitchText: 'Switch to Sign In'
+        }
+      })
+    } else if (this.state.signWay === SIGN_WAY.signUp) {
+      this.setState({
+        signWay: SIGN_WAY.signIn,
+        uiText: {
+          signWayText: 'Sign in',
+          signButtonText: 'Sing In',
+          signWaySwitchText: 'Switch to Sign Up'
+        }
+      })
+    } else {
+      this.setState({ errorDialogOpen: true });
     }
   }
 
@@ -95,9 +162,9 @@ class SignIn extends Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {this.state.uiText.signWayText}
           </Typography>
-          <form className={classes.form} onSubmit={this.handleUserLogin}>
+          <form className={classes.form} onSubmit={this.handleUserSign}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="name">Username</InputLabel>
               <Input id="name" name="name" autoComplete="name" value={name} onChange={this.handleChange} autoFocus />
@@ -106,21 +173,41 @@ class SignIn extends Component {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input name="password" type="password" id="password" value={password} onChange={this.handleChange} autoComplete="current-password" />
             </FormControl>
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
+              name="sigin"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              Sign in
+              {this.state.uiText.signButtonText}
             </Button>
           </form>
+          <Button color="secondary" onClick={this.handelSwitchSignWay}>
+            {this.state.uiText.signWaySwitchText}
+          </Button>
         </Paper>
+        <Dialog
+          open={this.state.errorDialogOpen}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Some error happened"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              1. Username or password error. <br/>
+              2. User not exist. <br/>
+              3. Server message: {this.state.errorMessage}
+              </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </main>
     );
   }
@@ -129,6 +216,5 @@ class SignIn extends Component {
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(SignIn);

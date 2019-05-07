@@ -1,26 +1,23 @@
 const User = require('../../controllers/user.controller')
+const bcrypt = require('bcrypt');
+const BCRYPT_SALT_ROUNTS = 3;
 
-// defined a verify strategy, 'name' is an idenfication
 const naiveStrategy = {
     name: 'naive',
     authenticate: async function (ctx) {
-      // TODO: use DB to find user whether exist
-      // let uid = ctx.query.uid
-      // if (uid) {
-      //   let user = {
-      //     id: parseInt(uid),
-      //     name: 'user' + uid
-      //   }
-      //   this.success(user)
-      // } else {
-      //   this.fail(409)  // user has exist, 409 confilict error
-      // }
-      let user = ctx.body
-      let userSearchResult = await User.searchUserByNameAndPassword(ctx.body.name, ctx.body.password);
+      let userSearchResult = await User.searchUserByName(ctx.body.name);
       if (userSearchResult) {
-        this.success(userSearchResult)
+        let passwordCompareResult = await bcrypt.compare(ctx.body.password, userSearchResult.password) 
+        if (passwordCompareResult) {
+          this.success({
+            name: userSearchResult.name,
+            _id: userSearchResult._id
+          })
+        } else {
+          this.fail(404, "username or password error")
+        }
       } else {
-        this.fail(400, "username or password error")
+        this.fail(404, "username or password error")
       }
     }
   }

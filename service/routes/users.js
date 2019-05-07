@@ -23,9 +23,17 @@ router.get('/', passport.authenticate('jwt', {session: false}), async function (
 router.post('/', async function (ctx, next) {
   let userSearchResult = await User.searchUserByName(ctx.request.body.name);
   if (!userSearchResult) {
-    const userCreateResult = await User.createNewUser(ctx.request.body.name, ctx.request.body.password);
-    if (userCreateResult) {
-      ctx.body = userCreateResult;
+    const user = await User.createNewUser(ctx.request.body.name, ctx.request.body.password);
+    if (user) {
+      let token = _generateJwtToken(user)
+      let responseUserBody = {
+        name: user.name,
+        _id: user._id
+      }
+      ctx.body = {
+        user: responseUserBody,
+        token
+      };
     } else {
       ctx.status = 500
       ctx.body = "internal error"
@@ -43,7 +51,6 @@ router.post('/', async function (ctx, next) {
 router.post('/login', passport.authenticate('naive', {
   session: false
 }), async function (ctx, next) {
-  // TODO: password need to be secret
   let user = ctx.state.user
   let token = _generateJwtToken(user)
     ctx.body = {
@@ -55,12 +62,16 @@ router.post('/login', passport.authenticate('naive', {
 /**
  * GET /api/user/logout – clear current JWT token and logout user (Optional)
  */
-router.get('/logout', passport.authenticate('jwt', {session: false}), function (ctx, next) {
+router.get('/logout', passport.authenticate('jwt', {session: false}), async function (ctx, next) {
   // TODO: add jwt token to black list
-  ctx.logout()
-  ctx.body = {
-    auth: ctx.isAuthenticated(),
-    user: ctx.state.user
+  let jwtTokenSaveResult = await User.logoutJwtSave(ctx.header.authorization)
+  if (jwtTokenSaveResult) {
+    ctx.logout()
+    ctx.body = {
+      user: ctx.state.user
+    }
+  } else {
+    ctx.status = 500
   }
 })
 
@@ -80,6 +91,15 @@ router.get('/:id/reservations', passport.authenticate('jwt', {session: false}), 
     ctx.body = "reservation not found"  
   }
 })
+
+router.post('/aaa', passport.authenticate('local', {
+  session: false 
+}), async (ctx) => {
+  ctx.body = {
+    message: 'local startegy works fine'
+  }
+})
+
 
 /**
  * private functions

@@ -13,10 +13,12 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
-    "typeface-roboto": "0.0.54"
+    "react-weui": "^1.1.3",
+    "typeface-roboto": "0.0.54",
+    "weui": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8888 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

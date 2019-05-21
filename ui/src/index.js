@@ -10,6 +10,8 @@ import {
 import SignIn from './components/SignIn'
 import BookList from './components/BookList'
 import BorrowedList from './components/BorrowedList'
+import WeUiDemo from './components/weuiDemo'
+import WeUiTabBar from './components/weuiTabBar'
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 // import { orange } from '@material-ui/core/colors'
@@ -32,6 +34,8 @@ ReactDOM.render(
         />
         <Route path="/booklist/" component={BookList} />
         <Route path="/borrowlist/" component={BorrowedList} />
+        <Route path="/weuidemo" component={WeUiDemo} />
+        <Route path="/weuitabbar" component={WeUiTabBar} />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));
 

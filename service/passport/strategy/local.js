@@ -10,7 +10,7 @@ const localStrategy = new LocalStrategy(
      */
     function (username, password, done) {
       var test = username;
-      return done(null, true, '登录成功')
+      return done(null, true, 'login sucess')
     }
   )
 

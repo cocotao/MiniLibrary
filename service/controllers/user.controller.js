@@ -4,11 +4,6 @@ const LogoutJwts = require('../db/models/logoutjwts')
 const bcrypt = require('bcrypt');
 const BCRYPT_SALT_ROUNTS = 3;
 
-// TODO
-// userName and password Validation()
-// passwordHash()
-// is user already exist()
-
 module.exports.getAllUsers = function() {
   return User.find({});
 };

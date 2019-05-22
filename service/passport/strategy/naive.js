@@ -1,6 +1,5 @@
 const User = require('../../controllers/user.controller')
 const bcrypt = require('bcrypt');
-const BCRYPT_SALT_ROUNTS = 3;
 
 const naiveStrategy = {
     name: 'naive',

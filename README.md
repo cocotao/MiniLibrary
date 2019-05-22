@@ -27,6 +27,14 @@
 - MongoDB (NoSQL)
 
 
+## **Design Diagram**
+### Whole block diagram
+![whole block diagram](./README/whole_block.jpg)
+
+### Serice block diagram
+![service diagram](./README/service_block.jpg)
+
+
 ## **Work log**
 * 2019/4/27  (weekend)
 1. Study how to operate MongoDB. Understand collections, documents, .etc.

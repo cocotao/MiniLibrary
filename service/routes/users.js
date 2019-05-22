@@ -92,15 +92,6 @@ router.get('/:id/reservations', passport.authenticate('jwt', {session: false}), 
   }
 })
 
-router.post('/aaa', passport.authenticate('local', {
-  session: false 
-}), async (ctx) => {
-  ctx.body = {
-    message: 'local startegy works fine'
-  }
-})
-
-
 /**
  * private functions
  */
@@ -121,6 +112,7 @@ module.exports = router
 
 /*
 // TODO: passport local strategy test
+// passport local strategy not work....
 router.post('/aaa', passport.authenticate('local', {
   session: false 
 }), async (ctx) => {

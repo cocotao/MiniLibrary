@@ -94,6 +94,9 @@ router.get('/getaccesstoken', async (ctx, next) => {
 
               // 小测试，实际应用中，可以由此创建一个帐户
               ctx.body = "verify is ok!"
+              await ctx.render('index', {
+                title: 'Hello Koa 2 verify access token'
+              })
               // ctx.body("\
               //                   <h1>" + userinfo.nickname + " 的个人信息</h1>\
               //                   <p><img src='" + userinfo.headimgurl + "' /></p>\

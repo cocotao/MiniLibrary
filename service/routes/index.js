@@ -2,7 +2,11 @@ const router = require('koa-router')()   // koa-generator has import koa-router
 
 
 router.get('/wx', async (ctx, next) => {
-  ctx.body = "hello wx"
+  let data = ctx.request;
+  console.log(data);
+  console.log(data.toString());
+  let responseBody = data.echostr ? data.echostr : {}
+  ctx.body = responseBody
 })
 
 router.get('/aaa', async (ctx, next) => {

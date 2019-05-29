@@ -34,7 +34,8 @@
     "mongoose-fill": "^1.7.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.0-rc.1"
+    "pug": "^2.0.0-rc.1",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "nodemon": "^1.8.1",

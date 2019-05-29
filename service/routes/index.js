@@ -87,7 +87,8 @@ router.get('/getaccesstoken', async (ctx, next) => {
               // 第四步：根据获取的用户信息进行对应操作
               var userinfo = JSON.parse(body);
               //console.log(JSON.parse(body));
-              console.log('获取微信信息成功！');
+              
+              console.log('获取微信信息成功！' + body);
 
               // 小测试，实际应用中，可以由此创建一个帐户
               ctx.body = "verify is ok!"

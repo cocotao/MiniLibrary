@@ -90,11 +90,12 @@ router.get('/getaccesstoken', async (ctx, next) => {
               console.log('获取微信信息成功！');
 
               // 小测试，实际应用中，可以由此创建一个帐户
-              res.send("\
-                                <h1>" + userinfo.nickname + " 的个人信息</h1>\
-                                <p><img src='" + userinfo.headimgurl + "' /></p>\
-                                <p>" + userinfo.city + "，" + userinfo.province + "，" + userinfo.country + "</p>\
-                            ");
+              ctx.body = "verify is ok!"
+              // ctx.body("\
+              //                   <h1>" + userinfo.nickname + " 的个人信息</h1>\
+              //                   <p><img src='" + userinfo.headimgurl + "' /></p>\
+              //                   <p>" + userinfo.city + "，" + userinfo.province + "，" + userinfo.country + "</p>\
+              //               ");
 
             } else {
               console.log(response.statusCode);

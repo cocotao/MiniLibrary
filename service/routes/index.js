@@ -66,7 +66,7 @@ router.get('/getaccesstoken', async (ctx, next) => {
       + '&code=' + code
       + '&grant_type=authorization_code',
   },
-    function (error, response, body) {
+    async function (error, response, body) {
       if (response.statusCode == 200) {
 
         // 第三步：拉取用户信息(需scope为 snsapi_userinfo)
@@ -81,7 +81,7 @@ router.get('/getaccesstoken', async (ctx, next) => {
             + '&openid=' + openid
             + '&lang=zh_CN',
         },
-          function (error, response, body) {
+          async function (error, response, body) {
             if (response.statusCode == 200) {
 
               // 第四步：根据获取的用户信息进行对应操作

@@ -156,7 +156,7 @@ class FormDemo extends React.Component {
                 <Form>
                     <FormCell>
                         <CellBody>
-                            <TextArea placeholder="Enter your comments" rows="3" maxlength="200"></TextArea>
+                            <TextArea placeholder="Enter your comments" rows="3" ></TextArea>
                         </CellBody>
                     </FormCell>
                 </Form>

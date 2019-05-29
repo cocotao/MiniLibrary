@@ -14,6 +14,8 @@ import IconMine from '../images/icon_black/guize.png';
 import IconBook from '../images/icon_black/fuwudiqiu.png'
 
 
+import MainContent from './MainContent'
+
 const styles = theme => ({
     '@global': {
         body: {
@@ -37,10 +39,10 @@ class TabBarAutoDemo extends React.Component {
     render() {
         const { classes } = this.props
         return (
-            <div class={classes.main_wrapper}>
+            <div className={classes.main_wrapper}>
                 <Tab type="tabbar">
                     <TabBarItem icon={<img src={IconButton} alt="" />} label="Tab1">
-                        <WeUiListDemo></WeUiListDemo>
+                        <MainContent></MainContent>
                     </TabBarItem>
                     <TabBarItem icon={<img src={IconMsg} alt="" />} label="Tab2">
                         <WeUiPreview></WeUiPreview>

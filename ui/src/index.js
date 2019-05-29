@@ -2,16 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import 'weui';
+import 'react-weui/build/packages/react-weui.css';
 
 import {
   BrowserRouter as Router,
   Route
 } from "react-router-dom";
-import SignIn from './components/SignIn'
-import BookList from './components/BookList'
-import BorrowedList from './components/BorrowedList'
-import WeUiDemo from './components/weuiDemo'
-import WeUiTabBar from './components/weuiTabBar'
+
+import MainPage from './pages/MainPage'
+
+
+// import SignIn from './components/SignIn'
+// import BookList from './components/BookList'
+// import BorrowedList from './components/BorrowedList'
+// import WeUiDemo from './components/weuiDemo'
+// import WeUiTabBar from './components/weuiTabBar'
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 // import { orange } from '@material-ui/core/colors'
@@ -29,13 +35,14 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Router>
-        <Route path="/" exact component={SignIn} 
+        {/* <Route path="/aaa" exact component={SignIn} 
            render={props => <SignIn {...props} />}
         />
         <Route path="/booklist/" component={BookList} />
         <Route path="/borrowlist/" component={BorrowedList} />
-        <Route path="/weuidemo" component={WeUiDemo} />
-        <Route path="/weuitabbar" component={WeUiTabBar} />
+        <Route path="/weuidemo" component={WeUiDemo} /> */}
+        <Route path="/" component={MainPage}
+         />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));
 

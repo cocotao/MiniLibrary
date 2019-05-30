@@ -43,7 +43,7 @@ router.get('/wxlogin', async (ctx, next) => {
   // 这是编码后的地址
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2Findex%2F' + router;
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + router;
-  var return_uri = 'http%3A%2F%2Fwww.ltversion123.com%2F' + router;
+  var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2F' + router;
   var scope = 'snsapi_userinfo';
 
   ctx.response.redirect('https://open.weixin.qq.com/connect/oauth2/authorize'

@@ -2,6 +2,7 @@ const router = require('koa-router')()   // koa-generator has import koa-router
 const crypto = require('crypto')
 const config = require('../passport/config')
 var request = require('request');
+const superagent = require('superagent') // 一个node环境http(s)请求中间件
 
 // 微信测试号
 var AppID = 'wx88094ad370bf30a8';
@@ -54,66 +55,93 @@ router.get('/wxlogin', async (ctx, next) => {
 })
 
 router.get('/getaccesstoken', async (ctx, next) => {
-  console.log("get_wx_access_token")
-  console.log("code_return: " + ctx.query.code)
+  // console.log("get_wx_access_token")
+  // console.log("code_return: " + ctx.query.code)
 
   // 第二步：通过code换取网页授权access_token
   var code = ctx.query.code;
-  request.get({
-    url: 'https://api.weixin.qq.com/sns/oauth2/access_token'
-      + '?appid=' + AppID
-      + '&secret=' + AppSecret
-      + '&code=' + code
-      + '&grant_type=authorization_code',
-  },
-    async function (error, response, body) {
-      if (response.statusCode == 200) {
 
-        // 第三步：拉取用户信息(需scope为 snsapi_userinfo)
-        //console.log(JSON.parse(body));
-        var data = JSON.parse(body);
-        var access_token = data.access_token;
-        var openid = data.openid;
+  await superagent.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + APPID +
+    '&secret=' + appsecret +
+    '&code=' + code +
+    '&grant_type=authorization_code')
+    .then(res => {
+      // 此处本来应该用res.body获取返回的json数据，但总是获取不到，只能用text代替
+      let result = JSON.parse(res.text)
+      access_token = result.access_token
+      openid = result.openid
+    })
+    .catch(res => {
+      console.log(res)
+    })
 
-        request.get({
-          url: 'https://api.weixin.qq.com/sns/userinfo'
-            + '?access_token=' + access_token
-            + '&openid=' + openid
-            + '&lang=zh_CN',
-        },
-          async function (error, response, body) {
-            if (response.statusCode == 200) {
+  // 3、刷新access_token（如果需要）
+  // 4、拉去用户信息
+  let res = await superagent.get(
+    'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token +
+      '&openid=' + openid +
+      '&lang=zh_CN')
+  let info = JSON.parse(res.text)
+    ctx.body = {
+      state: 1,
+      msg: info
+  }
 
-              // 第四步：根据获取的用户信息进行对应操作
-              var userinfo = JSON.parse(body);
-              //console.log(JSON.parse(body));
+  // request.get({
+  //   url: 'https://api.weixin.qq.com/sns/oauth2/access_token'
+  //     + '?appid=' + AppID
+  //     + '&secret=' + AppSecret
+  //     + '&code=' + code
+  //     + '&grant_type=authorization_code',
+  // },
+  //   async function (error, response, body) {
+  //     if (response.statusCode == 200) {
+
+  //       // 第三步：拉取用户信息(需scope为 snsapi_userinfo)
+  //       //console.log(JSON.parse(body));
+  //       var data = JSON.parse(body);
+  //       var access_token = data.access_token;
+  //       var openid = data.openid;
+
+  //       request.get({
+  //         url: 'https://api.weixin.qq.com/sns/userinfo'
+  //           + '?access_token=' + access_token
+  //           + '&openid=' + openid
+  //           + '&lang=zh_CN',
+  //       },
+  //         async function (error, response, body) {
+  //           if (response.statusCode == 200) {
+
+  //             // 第四步：根据获取的用户信息进行对应操作
+  //             var userinfo = JSON.parse(body);
+  //             //console.log(JSON.parse(body));
               
-              console.log('获取微信信息成功！' + body);
+  //             console.log('获取微信信息成功！' + body);
 
-              console.log('ctx' + ctx);
+  //             console.log('ctx' + ctx);
         
-              ctx.response.redirect('http://148.70.236.60/aaa');
-              // 小测试，实际应用中，可以由此创建一个帐户
-              // ctx.body = "verify is ok!"
-              // await ctx.render('index', {
-              //   title: 'Hello Koa 2 verify access token'
-              // })
-              // ctx.body("\
-              //                   <h1>" + userinfo.nickname + " 的个人信息</h1>\
-              //                   <p><img src='" + userinfo.headimgurl + "' /></p>\
-              //                   <p>" + userinfo.city + "，" + userinfo.province + "，" + userinfo.country + "</p>\
-              //               ");
+  //             ctx.response.redirect('http://148.70.236.60/aaa');
+  //             // 小测试，实际应用中，可以由此创建一个帐户
+  //             // ctx.body = "verify is ok!"
+  //             // await ctx.render('index', {
+  //             //   title: 'Hello Koa 2 verify access token'
+  //             // })
+  //             // ctx.body("\
+  //             //                   <h1>" + userinfo.nickname + " 的个人信息</h1>\
+  //             //                   <p><img src='" + userinfo.headimgurl + "' /></p>\
+  //             //                   <p>" + userinfo.city + "，" + userinfo.province + "，" + userinfo.country + "</p>\
+  //             //               ");
 
-            } else {
-              console.log(response.statusCode);
-            }
-          }
-        );
-      } else {
-        console.log(response.statusCode);
-      }
-    }
-  );
+  //           } else {
+  //             console.log(response.statusCode);
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       console.log(response.statusCode);
+  //     }
+  //   }
+  // );
 })
 
 router.get('/aaa', async (ctx, next) => {

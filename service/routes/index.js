@@ -43,10 +43,10 @@ router.get('/wxlogin', async (ctx, next) => {
   // 这是编码后的地址
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2Findex%2F' + router;
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + router;
-  var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + router;
+  var return_uri = 'http%3A%2F%2Fwww.ltversion123.com%2F' + router;
   var scope = 'snsapi_userinfo';
 
-  ctx.redirect('https://open.weixin.qq.com/connect/oauth2/authorize'
+  ctx.response.redirect('https://open.weixin.qq.com/connect/oauth2/authorize'
     + '?appid=' + AppID
     + '&redirect_uri=' + return_uri
     + '&response_type=code&scope=' + scope
@@ -92,7 +92,7 @@ router.get('/getaccesstoken', async (ctx, next) => {
 
               console.log('ctx' + ctx);
         
-              ctx.redirect('http://148.70.236.60/aaa');
+              ctx.response.redirect('http://148.70.236.60/aaa');
               // 小测试，实际应用中，可以由此创建一个帐户
               // ctx.body = "verify is ok!"
               // await ctx.render('index', {

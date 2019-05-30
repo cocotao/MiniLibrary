@@ -61,8 +61,8 @@ router.get('/getaccesstoken', async (ctx, next) => {
   // 第二步：通过code换取网页授权access_token
   var code = ctx.query.code;
 
-  await superagent.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + APPID +
-    '&secret=' + appsecret +
+  await superagent.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + AppID +
+    '&secret=' + AppSecret +
     '&code=' + code +
     '&grant_type=authorization_code')
     .then(res => {

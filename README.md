@@ -1,6 +1,6 @@
 # MiniLibrary
 - This is a Books, Users and Reservations mini project. 
-- Previous URL refer to http://148.70.236.60:3000.
+- Previous URL refer to http://148.70.236.60.
 - You could import postman script to test service endpoints.  
 
 ## **Technical Stacks**

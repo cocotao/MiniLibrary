@@ -1,6 +1,6 @@
 # MiniLibrary
 - This is a Books, Users and Reservations mini project. 
-- Previous URL refer to http://148.70.236.60:3000.
+- Previous URL refer to http://148.70.236.60.
 - You could import postman script to test service endpoints.  
 
 ## **Technical Stacks**
@@ -25,6 +25,14 @@
 
 ### DB
 - MongoDB (NoSQL)
+
+
+## **Design Diagram**
+### Whole block diagram
+![whole block diagram](./README/whole_block.jpg)
+
+### Serice block diagram
+![service diagram](./README/service_block.jpg)
 
 
 ## **Work log**

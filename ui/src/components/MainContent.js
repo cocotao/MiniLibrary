@@ -8,54 +8,52 @@ import {
     Article
 } from 'react-weui';
 
+import Title from '../components/Title'
+
 class NavBarDemo extends React.Component {
-    state={
-        tab:0
+    state = {
+        tab: 0
     };
 
     render() {
         return (
-            <Tab>
-                <NavBar>
-                    <NavBarItem active={this.state.tab === 0} onClick={e=>this.setState({tab:0})}>Nav1</NavBarItem>
-                    <NavBarItem active={this.state.tab === 1} onClick={e=>this.setState({tab:1})}>Nav2</NavBarItem>
-                </NavBar>
-                <TabBody>
-                    <Article style={{display: this.state.tab === 0 ? null : 'none'}}>
-                        <h1>Page 1</h1>
-                        <section>
-                            <h2 className="title">Heading</h2>
+            <div>
+                <Title> </Title>
+
+                <Tab>
+                    <NavBar>
+                        <NavBarItem active={this.state.tab === 0} onClick={e => this.setState({ tab: 0 })}>消息提醒</NavBarItem>
+                        <NavBarItem active={this.state.tab === 1} onClick={e => this.setState({ tab: 1 })}>热门推荐</NavBarItem>
+                    </NavBar>
+                    <TabBody>
+                        <Article style={{ display: this.state.tab === 0 ? null : 'none' }}>
+                            <h1>以下是新消息列表</h1>
                             <section>
-                                <h3>1.1 Title</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute</p>
+                                <h2 className="title">以下是新消息列表</h2>
+                                <section>
+                                    <h3>1.1 以下是新消息列表</h3>
+                                    <p>以下是新消息列表内容</p>
+                                </section>
                             </section>
-                        </section>
-                    </Article>
-                    <Article style={{display: this.state.tab === 1 ? null : 'none'}}>
-                        <h1>Page 2</h1>
-                        <section>
-                            <h2 className="title">Heading</h2>
+                        </Article>
+                        <Article style={{ display: this.state.tab === 1 ? null : 'none' }}>
+                            <h1>以下是热门推荐列表</h1>
                             <section>
-                                <h3>2.1 Title</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute</p>
-                            </section>
-                            <section>
-                                <h3>2.2 Title</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                <h2 className="title">以下是热门推荐列表</h2>
+                                <section>
+                                    <h3>2.1 以下是热门推荐列表</h3>
+                                    <p>以下是热门推荐列表以下是热门推荐列表</p>
+                                </section>
+                                <section>
+                                    <h3>2.2 以下是热门推荐列表</h3>
+                                    <p>以下是热门推荐列表 Excepteur sint occaecat cupidatat non
                                     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </section>
                             </section>
-                        </section>
-                    </Article>
-                </TabBody>
-            </Tab>
+                        </Article>
+                    </TabBody>
+                </Tab>
+            </div>
         );
     }
 };

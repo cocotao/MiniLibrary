@@ -47,36 +47,6 @@ class ListDemo extends React.Component {
     render() {
         return (
             <div>
-                <Panel>
-                    <PanelHeader>
-                        Media with image
-                    </PanelHeader>
-                    <PanelBody>
-                        <MediaBox type="appmsg" href="javascript:void(0);">
-                            <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                            <MediaBoxBody>
-                                <MediaBoxTitle>Media heading</MediaBoxTitle>
-                                <MediaBoxDescription>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                </MediaBoxDescription>
-                            </MediaBoxBody>
-                        </MediaBox>
-                        <MediaBox type="appmsg" href="javascript:void(0);">
-                            <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                            <MediaBoxBody>
-                                <MediaBoxTitle>Media heading</MediaBoxTitle>
-                                <MediaBoxDescription>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                </MediaBoxDescription>
-                            </MediaBoxBody>
-                        </MediaBox>
-                    </PanelBody>
-                    <PanelFooter href="javascript:void(0);">
-                        <CellMore />
-                    </PanelFooter>
-                </Panel>
-
-
                 <CellsTitle>List with description</CellsTitle>
                 <Cells>
                     <Cell>

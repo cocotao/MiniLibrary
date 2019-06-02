@@ -2,10 +2,7 @@ import React from 'react';
 import { Tab, TabBarItem } from 'react-weui';
 import { withStyles } from '@material-ui/core/styles';
 
-import WeUiListDemo from './weuiListDemo'
 import WeUiTabDemo from './weuiTab'
-import WeUiPreview from './weuiPreview'
-import WeUiFormDemo from './weuiForm'
 
 import IconButton from '../images/icon_black/add-black.png';
 import IconMsg from '../images/icon_black/bianji.png';
@@ -15,6 +12,9 @@ import IconBook from '../images/icon_black/fuwudiqiu.png'
 
 
 import MainContent from './MainContent'
+import ActivityContent from './ActivityContent'
+import MyContent from './MyContent'
+import BookListContent from './BookListContent'
 
 const styles = theme => ({
     '@global': {
@@ -41,20 +41,20 @@ class TabBarAutoDemo extends React.Component {
         return (
             <div className={classes.main_wrapper}>
                 <Tab type="tabbar">
-                    <TabBarItem icon={<img src={IconButton} alt="" />} label="Tab1">
+                    <TabBarItem icon={<img src={IconButton} alt="" />} label="首页">
                         <MainContent></MainContent>
                     </TabBarItem>
-                    <TabBarItem icon={<img src={IconMsg} alt="" />} label="Tab2">
-                        <WeUiPreview></WeUiPreview>
+                    <TabBarItem icon={<img src={IconMsg} alt="" />} label="活动">
+                        <ActivityContent></ActivityContent>
                     </TabBarItem>
-                    <TabBarItem icon={<img src={IconArticle} alt="" />} label="Tab3">
+                    <TabBarItem icon={<img src={IconArticle} alt="" />} label="扫一扫">
                         <WeUiTabDemo></WeUiTabDemo>
                     </TabBarItem>
-                    <TabBarItem icon={<img src={IconMine} alt="" />} label="Tab4">
-                        <WeUiFormDemo></WeUiFormDemo>
+                    <TabBarItem icon={<img src={IconMine} alt="" />} label="图书">
+                        <BookListContent></BookListContent>
                     </TabBarItem>
-                    <TabBarItem icon={<img src={IconBook} alt="" />} label="Tab5">
-                        <WeUiTabDemo></WeUiTabDemo>
+                    <TabBarItem icon={<img src={IconBook} alt="" />} label="我的">
+                        <MyContent></MyContent>
                     </TabBarItem>
                 </Tab>
             </div>

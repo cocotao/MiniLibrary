@@ -43,7 +43,7 @@ app.use(bodyparser({
 app.use(json())
 app.use(logger())
 
-// const index = require('./routes/index')
+const index = require('./routes/index')
 const users = require('./routes/users')
 const books = require('./routes/books')
 const reservation = require('./routes/reservation')
@@ -79,7 +79,7 @@ app.use(async (ctx, next) => {
 });
 
 // routes // orignal router method
-// app.use(index.routes(), index.allowedMethods())
+app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(books.routes(), books.allowedMethods())
 app.use(reservation.routes(), reservation.allowedMethods())

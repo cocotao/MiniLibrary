@@ -1,7 +1,6 @@
 const router = require('koa-router')()   // koa-generator has import koa-router
 const crypto = require('crypto')
 const config = require('../passport/config')
-var request = require('request');
 const superagent = require('superagent') // 一个node环境http(s)请求中间件
 
 // 微信测试号
@@ -44,13 +43,15 @@ router.get('/wxlogin', async (ctx, next) => {
   // 这是编码后的地址
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2Findex%2F' + router;
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + router;
-  var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2F' + router;
+  var return_uri = 'http%3A%2F%2F127.0.0.1%2F' + router;
+  // var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2F' + router;
   var scope = 'snsapi_userinfo';
 
   ctx.response.redirect('https://open.weixin.qq.com/connect/oauth2/authorize'
     + '?appid=' + AppID
     + '&redirect_uri=' + return_uri
-    + '&response_type=code&scope=' + scope
+    + '&response_type=code' 
+    + '&scope=' + scope
     + '&state=STATE#wechat_redirect');
 })
 
@@ -61,10 +62,11 @@ router.get('/getaccesstoken', async (ctx, next) => {
   // 第二步：通过code换取网页授权access_token
   var code = ctx.query.code;
 
-  await superagent.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + AppID +
-    '&secret=' + AppSecret +
-    '&code=' + code +
-    '&grant_type=authorization_code')
+  await superagent.get('https://api.weixin.qq.com/sns/oauth2/access_token' 
+    + '?appid=' + AppID 
+    + '&secret=' + AppSecret 
+    + '&code=' + code 
+    + '&grant_type=authorization_code')
     .then(res => {
       // 此处本来应该用res.body获取返回的json数据，但总是获取不到，只能用text代替
       let result = JSON.parse(res.text)
@@ -80,7 +82,7 @@ router.get('/getaccesstoken', async (ctx, next) => {
   let res = await superagent.get(
     'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token +
       '&openid=' + openid +
-      '&lang=zh_CN')
+      '&lang=zh_CN');
   let info = JSON.parse(res.text)
     ctx.body = {
       state: 1,

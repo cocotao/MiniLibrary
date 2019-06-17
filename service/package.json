@@ -35,7 +35,9 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "superagent": "^5.0.8",
+    "wechat-jssdk": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.8.1",

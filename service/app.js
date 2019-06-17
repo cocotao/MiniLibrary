@@ -46,6 +46,7 @@ app.use(logger())
 const index = require('./routes/index')
 const users = require('./routes/users')
 const books = require('./routes/books')
+const wechat = require('./routes/wechat')
 const reservation = require('./routes/reservation')
 
 // error handler
@@ -82,6 +83,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(books.routes(), books.allowedMethods())
+app.use(wechat.routes(), wechat.allowedMethods())
 app.use(reservation.routes(), reservation.allowedMethods())
 
 // error-handling

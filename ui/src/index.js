@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 
 import MainPage from './pages/MainPage'
+import Login from './pages/Login'
 
 
 // import SignIn from './components/SignIn'
@@ -41,7 +42,8 @@ ReactDOM.render(
         <Route path="/booklist/" component={BookList} />
         <Route path="/borrowlist/" component={BorrowedList} />
         <Route path="/weuidemo" component={WeUiDemo} /> */}
-        <Route path="/" component={MainPage}
+        {/* <Route path="/" component={MainPage} */}
+        <Route path="/" component={Login}
          />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));

@@ -6,7 +6,7 @@ import axios from 'axios';
 class WeChatAuthorization extends React.Component {
 
     render() {
-        console(this.props.match);
+        console.log(this.props.match);
         const query = this.props.match.location.search 
         const arr = query.split('&') // ['?code=', 'state=']
         const codeStr = arr[0].substr(5) // '1'

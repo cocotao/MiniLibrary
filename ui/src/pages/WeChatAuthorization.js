@@ -7,14 +7,17 @@ class WeChatAuthorization extends React.Component {
 
     render() {
         console.log(this.props.match);
-        const query = this.props.match.location.search 
-        const arr = query.split('&') // ['?code=', 'state=']
-        const codeStr = arr[0].substr(5) // '1'
-        const that = this;
+        var query = this.props.location.search;
+        var arr = query.split('&') // ['?code=', 'state=']
+        var codeStr = arr[0].substr(6) // '1'
+        console.log(codeStr);
+        var that = this;
         axios({
           method: "GET",
           url: '/userinfo',
-          data: {},
+          data: {
+            code: codeStr
+          },
           headers: {
             'Content-Type': 'application/json'
           }

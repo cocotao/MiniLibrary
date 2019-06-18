@@ -9,6 +9,7 @@ class WeChatAuthorization extends React.Component {
         return (
             <div >
                WeChatAuthorization
+               <div> {this.props} </div>
             </div>
         );
     }

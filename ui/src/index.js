@@ -12,6 +12,7 @@ import {
 
 import MainPage from './pages/MainPage'
 import Login from './pages/Login'
+import WeChatAuthorization from './pages/WeChatAuthorization'
 
 
 // import SignIn from './components/SignIn'
@@ -44,6 +45,8 @@ ReactDOM.render(
         <Route path="/weuidemo" component={WeUiDemo} /> */}
         {/* <Route path="/" component={MainPage} */}
         <Route path="/" component={Login}
+         />
+         <Route path="/WeChatAuthorization" component={WeChatAuthorization}
          />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));

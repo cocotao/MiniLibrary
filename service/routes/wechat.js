@@ -15,8 +15,8 @@ router.get('/wxlogin', async (ctx, next) => {
   var redirectUri = 'getaccesstoken';
   // 这是编码后的地址
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2Findex%2F' + redirectUri;
-  // var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + redirectUri;
-  var return_uri = 'http%3A%2F%2F127.0.0.1%2Fwechat%2F' + redirectUri;
+  var return_uri = 'http%3A%2F%2F148.70.236.60%2Fwechat%2F' + redirectUri;
+  // var return_uri = 'http%3A%2F%2F127.0.0.1%2Fwechat%2F' + redirectUri;
   // var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2F' + redirectUri;
   var scope = 'snsapi_userinfo';
 
@@ -28,7 +28,7 @@ router.get('/wxlogin', async (ctx, next) => {
     + '&state=STATE#wechat_redirect');
 })
 
-router.get('/getaccesstoken', async (ctx, next) => {
+router.get('/userinfo', async (ctx, next) => {
   // console.log("get_wx_access_token")
   // console.log("code_return: " + ctx.query.code)
 
@@ -56,10 +56,11 @@ router.get('/getaccesstoken', async (ctx, next) => {
     'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token +
       '&openid=' + openid +
       '&lang=zh_CN');
-  let info = JSON.parse(res.text)
+  let userInfo = JSON.parse(res.text)
     ctx.body = {
       state: 1,
-      msg: info
+      userInfo: userInfo,
+      accessToken: access_token
   }
 })
 

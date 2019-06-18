@@ -10,6 +10,7 @@ const styles = theme => ({
 class MainPage extends React.Component {
     render() {
         const { classes } = this.props
+
         return (
             <div className={classes.main_wrapper}>
 

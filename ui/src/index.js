@@ -44,10 +44,9 @@ ReactDOM.render(
         <Route path="/borrowlist/" component={BorrowedList} />
         <Route path="/weuidemo" component={WeUiDemo} /> */}
         {/* <Route path="/" component={MainPage} */}
-        <Route path="/" component={Login}
-         />
-         <Route path="/WeChatAuthorization" component={WeChatAuthorization}
-         />
+         <Route path="/" component={Login} />
+         <Route path="/wechatauthorization" component={WeChatAuthorization} />
+         <Route path="/mainpage" component={MainPage} />
     </Router>
   </MuiThemeProvider>, document.getElementById('root'));
 

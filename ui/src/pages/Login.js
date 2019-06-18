@@ -4,9 +4,6 @@ import axios from 'axios';
 
 
 class LoginPage extends React.Component {
-    state = {
-        loginInfo : ""
-    }
 
     render() {
       var redirectPage = 'WeChatAuthorization';
@@ -24,10 +21,7 @@ class LoginPage extends React.Component {
 
         return (
             <div >
-               
-                <div> {this.state.loginInfo} </div>
-
-                <a href = {wechatPath}>直接跳转到微信提供的网页</a>
+                <a href={wechatPath}>直接跳转到微信提供的网页</a>
             </div>
         );
     }

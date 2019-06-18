@@ -14,7 +14,7 @@ class WeChatAuthorization extends React.Component {
         var that = this;
         axios({
           method: "GET",
-          url: '/userinfo',
+          url: '/wechat/userinfo',
           data: {
             code: codeStr
           },
@@ -36,10 +36,7 @@ class WeChatAuthorization extends React.Component {
           console.log(error);
         });
 
-        
-
-        
-        return;
+        return null;
     }
 };
 

@@ -15,7 +15,7 @@ router.get('/wxlogin', async (ctx, next) => {
   var redirectUri = 'getaccesstoken';
   // 这是编码后的地址
   // var return_uri = 'http%3A%2F%2F148.70.236.60%2Findex%2F' + redirectUri;
-  var return_uri = 'http%3A%2F%2F148.70.236.60%2Fwechat%2F' + redirectUri;
+  var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2Fwechat%2F' + redirectUri;
   // var return_uri = 'http%3A%2F%2F127.0.0.1%2Fwechat%2F' + redirectUri;
   // var return_uri = 'http%3A%2F%2Fwww.ltvision123.com%2F' + redirectUri;
   var scope = 'snsapi_userinfo';

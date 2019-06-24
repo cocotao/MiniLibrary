@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
       var redirectPage = 'WeChatAuthorization';
         // var return_uri = 'http%3A%2F%2F127.0.0.1%2F' + redirectPage;
         // var return_uri = 'http%3A%2F%2F148.70.236.60%2F' + redirectPage;
-        var return_uri = 'http://148.70.236.60/' + redirectPage;
+        var return_uri = 'http://www.ltvision123.com/' + redirectPage;
         var AppID = 'wx88094ad370bf30a8';
         var scope = 'snsapi_userinfo';
         var wechatPath = 'https://open.weixin.qq.com/connect/oauth2/authorize'

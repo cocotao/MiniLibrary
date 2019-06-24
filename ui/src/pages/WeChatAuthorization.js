@@ -22,7 +22,7 @@ class WeChatAuthorization extends React.Component {
             'Content-Type': 'application/json'
           }
         }).then(function (response) {
-          console.log(JSON.stringify(response));
+          // console.log(JSON.stringify(response));
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("userInfo", response.userInfo);
 

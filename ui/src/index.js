@@ -7,6 +7,7 @@ import 'react-weui/build/packages/react-weui.css';
 
 import {
   BrowserRouter as Router,
+  HashRouter,
   Route,
   Switch
 } from "react-router-dom";

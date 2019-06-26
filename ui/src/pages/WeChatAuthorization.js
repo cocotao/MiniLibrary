@@ -1,9 +1,12 @@
 import React from 'react';
-
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 
 class WeChatAuthorization extends React.Component {
+    state = {
+      redirect : false
+    };
 
     render() {
         console.log(this.props.match);
@@ -26,17 +29,19 @@ class WeChatAuthorization extends React.Component {
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("userInfo", response.userInfo);
 
-          let path = {
-            pathname:'/mainpage/',
-            state: {}
-          }
-          that.props.history.push(path);
+          // let path = {
+          //   pathname:'/mainpage/',
+          //   state: {}
+          // }
+          // that.props.history.push(path);
+
+          that.setState({redirect: true});
   
         }).catch(function (error) {
           console.log(error);
         });
 
-        return null;
+        return <Redirect push to="/mainpage" />; //or <Redirect push to="/sample?a=xxx&b=yyy" /> 传递更多参数
     }
 };
 

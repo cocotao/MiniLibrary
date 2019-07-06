@@ -88,11 +88,18 @@
 * 2019/5/7 (working day)
 1. Refine code. 
 2. Introduce bcrypt to secret user password.
-
-
-**Some still need to be refine/enhance/modify...**
-
+* TODO:
 1. When user logout, need to make the jwtToken lose effectiveness.
+
+* 2019/7/6
+1. Introduce weui. 
+2. Introduce wechat jssdk. 
+3. Implement wechat authorization and redirect to main page.
+4. Adopt Nginx to Tencent Server (failed), can't redirect page. But serve could. 
+5. Use serve start UI. (pm2)
+
+
+
 
 
 

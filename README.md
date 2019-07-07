@@ -1,6 +1,6 @@
 # MiniLibrary
 - This is a Books, Users and Reservations mini project. 
-- Previous URL refer to http://148.70.236.60.
+- Previous URL refer to http://www.ltvision.com.
 - You could import postman script to test service endpoints.  
 
 ## **Technical Stacks**
@@ -13,6 +13,10 @@
 
 - Materail UI
     - momentjs
+
+- WeChat
+    - weui
+    - jssdk
 
 ### Service
 - KOA 2.0  
@@ -95,7 +99,7 @@
 1. Introduce weui. 
 2. Introduce wechat jssdk. 
 3. Implement wechat authorization and redirect to main page.
-4. Adopt Nginx to Tencent Server (failed), can't redirect page. But serve could. 
+4. Adopt Nginx to Tencent Server (failed), can't redirect page. But serve(npm) could. 
 5. Use serve start UI. (pm2)
 
 

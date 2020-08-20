@@ -9,7 +9,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "crypto": "^1.0.1",
     "debug": "^2.6.3",
     "fs": "0.0.1-security",
